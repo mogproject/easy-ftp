@@ -12,6 +12,7 @@ def get_version():
 
 setup(
     name='easy-ftp',
+    python_requires='>=3.6.0',
     version=get_version(),
     description='Super Simple FTP/SFTP Client',
     author='mogproject',

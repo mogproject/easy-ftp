@@ -18,7 +18,7 @@ TBD
 Dependencies
 ------------
 
-* Python >= 3.4
+* Python >= 3.6
 * click
 * pyyaml
 * paramiko
@@ -36,7 +36,7 @@ Installation
 +-------------+---------------------------------------+
 | Upgrade     |``pip install --upgrade .``            |
 +-------------+---------------------------------------+
-| Uninstall   |``pip uninstall easy-ftp`              |
+| Uninstall   |``pip uninstall easy-ftp``             |
 +-------------+---------------------------------------+
 
 * Check the installed version: ``easy-ftp --version``
