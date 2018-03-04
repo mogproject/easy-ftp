@@ -19,7 +19,8 @@ class Setting(CaseClass):
     Manages all settings.
     """
 
-    def __init__(self, config_path=None, encrypt_key_path=None, host=None, protocol=None, port=None, user=None, encrypted_password=None, decrypted_password=None):
+    def __init__(self, config_path=None, encrypt_key_path=None, host=None, protocol=None, port=None, user=None, encrypted_password=None,
+                 decrypted_password=None):
         # set default encrypt key path
         if encrypt_key_path is None:
             encrypt_key_path = str(Path.home() / DEFAULT_KEY_NAME)
@@ -42,7 +43,8 @@ class Setting(CaseClass):
             else:
                 assert False, 'Unknown protocol: %s: %s' % (protocol, self.config_path)
 
-        return self.copy(host=config['host'], protocol=config['protocol'], port=port, user=config['user'], encrypted_password=config.get('pass'))
+        return self.copy(host=config['host'], protocol=config['protocol'], port=port, user=config['user'],
+                         encrypted_password=config.get('pass'))
 
     def decrypt_password(self):
         if self.decrypted_password is not None:

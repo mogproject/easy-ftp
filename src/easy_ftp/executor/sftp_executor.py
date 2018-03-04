@@ -1,3 +1,4 @@
+import sys
 import paramiko
 
 
@@ -21,6 +22,16 @@ class SFTPExecutor():
     def listdir(self, path='.'):
         print('[INFO] Listing remote directory: %s' % path)
         return sorted(self.sftp.listdir_attr(path), key=lambda a: a.filename)
+
+    def get(self, remote_path, local_path):
+        print('[INFO] Downloading: %s -> %s' % (remote_path, local_path))
+        self.sftp.get(remote_path, local_path, self.__print_progress)
+        print()
+
+    @staticmethod
+    def __print_progress(transferred_bytes, total_bytes):
+        sys.stdout.write('\r[INFO] Transferring... [%d / %d] (%d%%)' %
+                         (transferred_bytes, total_bytes, transferred_bytes * 100 // total_bytes))
 
     def close(self):
         self.sftp.close()
