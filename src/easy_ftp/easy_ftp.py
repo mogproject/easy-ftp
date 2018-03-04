@@ -13,15 +13,22 @@ def main():
 
 
 @main.command('ls')
+@click.argument('remote_path', nargs=-1)
 @click.option('--config', type=str, metavar='PATH', default=None, help='Use the specific configuration file.')
 @click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
 @click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
-def ftp_list(config, key, debug):
-    _command_wrapper(_ftp_list_impl, debug, config, key)
+def ftp_list(remote_path, config, key, debug):
+    _command_wrapper(_ftp_list_impl, debug, config, key, remote_path)
 
 
-def _ftp_list_impl(config, key):
-    print(Setting(config, key).lookup_config().load_config().decrypt_password())
+def _ftp_list_impl(config, key, remote_path):
+    exec = Setting(config, key).lookup_config().load_config().decrypt_password().get_executor()
+    if not remote_path:
+        remote_path = ['.']
+    for p in remote_path:
+        for ls in exec.listdir(p):
+            print(ls)
+    exec.close()
 
 
 @main.command('get')

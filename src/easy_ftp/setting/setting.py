@@ -4,6 +4,7 @@ import yaml
 import getpass
 import os
 from cryptography.fernet import Fernet
+from easy_ftp.executor import SFTPExecutor
 
 KEYWORD_SFTP = 'sftp'
 KEYWORD_FTP = 'ftp'
@@ -96,6 +97,11 @@ class Setting(CaseClass):
         print('[INFO] Encrypted your password. Copy and paste the following to your configuration file.')
         print('\npass: %s\n' % encrypted.decode())
         return self
+
+    def get_executor(self):
+        if self.protocol == 'sftp':
+            return SFTPExecutor(self.host, self.port, self.user, self.decrypted_password)
+        assert False, 'Unknown protocol: %s' % self.protocol
 
     def __str__(self):
         s = self.copy(decrypted_password='******')
