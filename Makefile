@@ -18,6 +18,9 @@ dev-install:
 dev-uninstall:
 	$(PYTHON) setup.py develop -u
 
+dev-setup:
+	$(PIP) install pycodestyle coverage
+
 style:
 	pycodestyle --max-line-length=140 src test
 	@echo "\nOK"

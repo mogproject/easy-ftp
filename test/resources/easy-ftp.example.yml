@@ -1,0 +1,5 @@
+host: ftp.example.com
+protocol: sftp
+port: 22
+user: exampleuser
+pass: gAAAAABam5XgtTU2lo7bd3YLknGytv9K8PmMU2xz90Hg1-Nv2dOdlujyveAIT5h8wUoFdF2jWKOXjp28kIdHXweo7ZGxQB1K0A==
