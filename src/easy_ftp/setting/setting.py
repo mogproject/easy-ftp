@@ -68,6 +68,7 @@ class Setting(CaseClass):
         while True:
             path = d / DEFAULT_CONFIG_NAME
             if path.exists():
+                print('[INFO] Using configuration file: %s' % path)
                 break
             nd = d.parent
             if d == nd:

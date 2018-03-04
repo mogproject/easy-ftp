@@ -9,7 +9,9 @@ from easy_ftp import _print_version, VERSION_HELP, _command_wrapper
 @click.option('--version', is_flag=True, callback=_print_version, expose_value=False, is_eager=True, help=VERSION_HELP)
 def main():
     """
-    Main function
+    Super Simple FTP/SFTP Client
+
+    Type `easy-ftp COMMAND --help` for more information.
     """
 
 
@@ -19,6 +21,11 @@ def main():
 @click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
 @click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
 def ftp_list(remote_path, config, key, debug):
+    """
+    Prints the list of files in the remote server.
+
+    @param remote_path: list of paths to get information
+    """
     _command_wrapper(_ftp_list_impl, debug, config, key, remote_path)
 
 
@@ -38,6 +45,12 @@ def _ftp_list_impl(config, key, remote_path):
 @click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
 @click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
 def ftp_get(remote_path, config, key, debug):
+    """
+    Downloads remote files.
+
+    @param remote_path: list of remote file paths to download.
+    If the last argument is an existing local directory, it will be interpreted as the local destination.
+    """
     _command_wrapper(_ftp_get_impl, debug, config, key, remote_path)
 
 
@@ -61,6 +74,12 @@ def _ftp_get_impl(config, key, remote_path):
 @click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
 @click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
 def ftp_put(local_path, config, key, debug):
+    """
+    Uploads local files.
+
+    @param local_path: list of local file paths to upload.
+    If the last argument ends with '/', it will be interpreted as the remote destination.
+    """
     _command_wrapper(_ftp_put_impl, debug, config, key, local_path)
 
 
@@ -82,4 +101,9 @@ def _ftp_put_impl(config, key, local_path):
 @click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
 @click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
 def encrypt(key, debug):
+    """
+    Encrypts a password.
+
+    A key file will be generated if it does not exist. You will be prompted for a password.
+    """
     _command_wrapper(lambda key: Setting(encrypt_key_path=key).encrypt_password(), debug, key)
