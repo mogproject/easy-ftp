@@ -4,6 +4,14 @@ Easy FTP
 
 Super Simple FTP/SFTP Client.
 
+.. image:: https://travis-ci.org/mogproject/easy-ftp.svg?branch=master
+   :target: https://travis-ci.org/mogproject/easy-ftp
+   :alt: Build Status
+
+.. image:: https://coveralls.io/repos/mogproject/easy-ftp/badge.svg?branch=master&service=github
+   :target: https://coveralls.io/github/mogproject/easy-ftp?branch=master
+   :alt: Coverage Status
+
 .. image:: https://img.shields.io/badge/license-Apache%202.0-blue.svg
    :target: http://choosealicense.com/licenses/apache-2.0/
    :alt: License
