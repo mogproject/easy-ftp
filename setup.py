@@ -22,6 +22,7 @@ setup(
         'click',
         'pyyaml',
         'paramiko',
+        'cryptography',
     ],
     tests_require=[
     ],
