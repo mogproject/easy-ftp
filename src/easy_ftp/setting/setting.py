@@ -43,8 +43,7 @@ class Setting(CaseClass):
             else:
                 assert False, 'Unknown protocol: %s: %s' % (protocol, self.config_path)
 
-        return self.copy(host=config['host'], protocol=config['protocol'], port=port, user=config['user'],
-                         encrypted_password=config.get('pass'))
+        return self.copy(host=config['host'], protocol=protocol, port=port, user=config['user'], encrypted_password=config.get('pass'))
 
     def decrypt_password(self):
         if self.decrypted_password is not None:
@@ -106,5 +105,6 @@ class Setting(CaseClass):
         assert False, 'Unknown protocol: %s' % self.protocol
 
     def __str__(self):
+        # mask the decrypted password for security
         s = self.copy(decrypted_password='******')
         return CaseClass.__str__(s)

@@ -56,8 +56,26 @@ def _ftp_get_impl(config, key, remote_path):
 
 
 @main.command('put')
-def ftp_put():
-    pass
+@click.argument('local_path', nargs=-1)
+@click.option('--config', type=str, metavar='PATH', default=None, help='Use the specific configuration file.')
+@click.option('--key', type=str, metavar='PATH', default=None, help='Use the specific encryption key.')
+@click.option('--debug', flag_value=True, default=False, help="Print the stack trace of the Exception.")
+def ftp_put(local_path, config, key, debug):
+    _command_wrapper(_ftp_put_impl, debug, config, key, local_path)
+
+
+def _ftp_put_impl(config, key, local_path):
+    exec = Setting(config, key).lookup_config().load_config().decrypt_password().get_executor()
+
+    # check if the remote dir is specified
+    remote_dir = Path()
+    if len(local_path) > 1 and local_path[-1].endswith('/'):
+        remote_dir = Path(local_path[-1])
+        local_path = local_path[:-1]
+
+    for p in local_path:
+        exec.put(p, str(remote_dir / Path(p).name))
+    exec.close()
 
 
 @main.command('encrypt')

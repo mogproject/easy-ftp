@@ -16,16 +16,22 @@ class SFTPExecutor():
         ssh.connect(host, port, username, password)
         sftp = ssh.open_sftp()
 
+        self.host = host
         self.ssh = ssh
         self.sftp = sftp
 
-    def listdir(self, path='.'):
+    def listdir(self, path):
         print('[INFO] Listing remote directory: %s' % path)
         return sorted(self.sftp.listdir_attr(path), key=lambda a: a.filename)
 
     def get(self, remote_path, local_path):
-        print('[INFO] Downloading: %s -> %s' % (remote_path, local_path))
+        print('[INFO] Downloading: %s:%s -> %s' % (self.host, remote_path, local_path))
         self.sftp.get(remote_path, local_path, self.__print_progress)
+        print()
+
+    def put(self, local_path, remote_path):
+        print('[INFO] Uploading: %s -> %s:%s' % (local_path, self.host, remote_path))
+        self.sftp.put(local_path, remote_path, self.__print_progress, confirm=True)
         print()
 
     @staticmethod
